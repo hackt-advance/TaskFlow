@@ -18,6 +18,10 @@ public class TaskApiTest {
             assertStatus(health, 200);
             assertContains(health.body(), "\"status\":\"ok\"");
 
+            HttpResponse<String> home = send(client, "GET", "/", null);
+            assertStatus(home, 200);
+            assertContains(home.body(), "<title>TaskFlow</title>");
+
             String createBody = """
                     {"title":"Write GitHub README","description":"Document API usage","priority":"HIGH","dueDate":"2026-08-10"}
                     """;
@@ -101,4 +105,3 @@ public class TaskApiTest {
         return json.substring(valueStart, valueEnd);
     }
 }
-

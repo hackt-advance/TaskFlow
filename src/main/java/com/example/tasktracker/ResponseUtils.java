@@ -23,5 +23,13 @@ public final class ResponseUtils {
             outputStream.write(responseBytes);
         }
     }
-}
 
+    public static void sendHtml(HttpExchange exchange, int statusCode, String body) throws IOException {
+        byte[] responseBytes = body.getBytes(StandardCharsets.UTF_8);
+        exchange.getResponseHeaders().set("Content-Type", "text/html; charset=utf-8");
+        exchange.sendResponseHeaders(statusCode, responseBytes.length);
+        try (OutputStream outputStream = exchange.getResponseBody()) {
+            outputStream.write(responseBytes);
+        }
+    }
+}

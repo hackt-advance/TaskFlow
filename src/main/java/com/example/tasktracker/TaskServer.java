@@ -12,6 +12,7 @@ public class TaskServer {
         TaskRepository repository = new TaskRepository();
         TaskController controller = new TaskController(repository);
         server = HttpServer.create(new InetSocketAddress(port), 0);
+        server.createContext("/", controller::handleHome);
         server.createContext("/health", controller::handleHealth);
         server.createContext("/api/tasks", controller::handleTasks);
         server.setExecutor(Executors.newFixedThreadPool(8));
@@ -25,4 +26,3 @@ public class TaskServer {
         server.stop(delaySeconds);
     }
 }
-
